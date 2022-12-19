@@ -34,7 +34,7 @@ function Server(h) {
 }
 
 if (flags.includes('--latitude')) {
-	Server('http://latitude');
+	Server('latitude');
 } else {
 	exec(COMMAND, {}, function (_error, HOST) {
 		Server(HOST);

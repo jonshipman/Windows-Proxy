@@ -16,7 +16,15 @@ for (const arg of process.argv) {
 	}
 }
 
-const PORT = options[2];
+let PORT = options[2];
+
+const portflag = flags.find((x) => x.includes('--port='));
+
+if (portflag) {
+	PORT = portflag.replace('--port=', '');
+	PORT = parseInt(PORT, 10);
+}
+
 const COMMAND = `@echo off & for /f "tokens=1" %g IN ('arp -a ^| findstr ${MAC}') do (echo %g)`;
 
 function Server(h) {
@@ -35,6 +43,8 @@ function Server(h) {
 
 if (flags.includes('--latitude')) {
 	Server('latitude');
+} else if (flags.includes('--kirkwall')) {
+	Server('192.168.86.199');
 } else {
 	exec(COMMAND, {}, function (_error, HOST) {
 		Server(HOST);
